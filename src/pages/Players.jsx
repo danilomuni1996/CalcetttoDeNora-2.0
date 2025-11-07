@@ -2,14 +2,6 @@ import { useState, useEffect } from 'react';
 import { API_URL } from '../api';
 
 const PlayersList = ({ players }) => {
-    // La funzione per eliminare un giocatore non ha bisogno di modifiche,
-    // ma la passiamo qui per completezza
-    const deletePlayer = async (id) => {
-        if (!confirm(`Sei sicuro di voler eliminare il giocatore con ID ${id}?`)) return;
-        // La logica di eliminazione va gestita nel componente padre per aggiornare lo stato
-        // Per ora, questo pulsante non farà nulla se non passiamo una funzione
-    };
-
     return (
         <div className="players-list">
             <h2>Elenco Giocatori</h2>
@@ -20,7 +12,6 @@ const PlayersList = ({ players }) => {
                         <th>Nome</th>
                         <th>Ruolo Preferito</th>
                         <th>Punti</th>
-                        {/* Azioni rimosse per ora, da re-implementare se necessario */}
                     </tr>
                 </thead>
                 <tbody>
@@ -54,8 +45,7 @@ const AddPlayerForm = ({ onPlayerAdded }) => {
         try {
             const response = await fetch(`${API_URL}/players`, { method: 'POST', body: formData });
             if (response.ok) {
-                const newPlayer = await response.json();
-                onPlayerAdded(newPlayer); // Chiama la funzione del genitore per aggiornare lo stato
+                onPlayerAdded();
                 setName('');
                 setPreferredRole('');
                 setPhoto(null);
@@ -98,7 +88,6 @@ const AddPlayerForm = ({ onPlayerAdded }) => {
     );
 };
 
-// COMPONENTE PRINCIPALE
 const Players = () => {
     const [playersWithStats, setPlayersWithStats] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -106,15 +95,17 @@ const Players = () => {
 
     const fetchData = async () => {
         setLoading(true);
+        setError(null);
         try {
             const [playersRes, matchesRes] = await Promise.all([
                 fetch(`${API_URL}/players`),
                 fetch(`${API_URL}/matches`)
             ]);
-            if (!playersRes.ok || !matchesRes.ok) throw new Error('Errore caricamento dati');
+            if (!playersRes.ok || !matchesRes.ok) throw new Error('Errore nel caricamento dei dati');
 
             const players = await playersRes.json();
             const matches = await matchesRes.json();
+            
             const stats = {};
             players.forEach(p => {
                 stats[p.id] = { ...p, points: 0, wins: 0, losses: 0, matches_played: 0 };
@@ -124,16 +115,19 @@ const Players = () => {
                 const teamA_ids = [match.teamA_attacker_id, match.teamA_goalkeeper_id];
                 const teamB_ids = [match.teamB_attacker_id, match.teamB_goalkeeper_id];
 
-                if (match.score_a > match.score_b) {
+                if (match.score_a > match.score_b) { // Team A vince
                     const isCappotto = match.score_a === 6;
                     const points_A = isCappotto ? 4 : 3;
-                    const points_B = isCappotto ? -1 : 0;
+                    const points_B = isCappotto ? -1 : 1; // Corretto
+                    
                     teamA_ids.forEach(id => { if (stats[id]) stats[id].points += points_A; });
                     teamB_ids.forEach(id => { if (stats[id]) stats[id].points += points_B; });
-                } else if (match.score_b > match.score_a) {
+
+                } else if (match.score_b > match.score_a) { // Team B vince
                     const isCappotto = match.score_b === 6;
                     const points_B = isCappotto ? 4 : 3;
-                    const points_A = isCappotto ? -1 : 0;
+                    const points_A = isCappotto ? -1 : 1; // Corretto
+
                     teamB_ids.forEach(id => { if (stats[id]) stats[id].points += points_B; });
                     teamA_ids.forEach(id => { if (stats[id]) stats[id].points += points_A; });
                 }
@@ -158,7 +152,7 @@ const Players = () => {
 
     return (
         <div>
-            <AddPlayerForm onPlayerAdded={() => fetchData()} />
+            <AddPlayerForm onPlayerAdded={fetchData} />
             <PlayersList players={playersWithStats} />
         </div>
     );
