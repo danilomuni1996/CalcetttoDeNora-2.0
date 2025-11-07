@@ -14,19 +14,13 @@ const MonthlyStats = () => {
                     fetch(`${API_URL}/players`),
                     fetch(`${API_URL}/matches`)
                 ]);
+                if (!playersRes.ok || !matchesRes.ok) throw new Error('Errore caricamento dati');
 
-                if (!playersRes.ok || !matchesRes.ok) {
-                    throw new Error('Errore nel caricamento dei dati');
-                }
-
-                // --- ECCO LA CORREZIONE ---
-                const players = await playersRes.json(); 
+                const players = await playersRes.json();
                 const allMatches = await matchesRes.json();
-                // -------------------------
-
+                
                 const thirtyDaysAgo = new Date();
                 thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-
                 const monthlyMatches = allMatches.filter(match => new Date(match.created_at) > thirtyDaysAgo);
 
                 const stats = {};
@@ -45,7 +39,7 @@ const MonthlyStats = () => {
                     if (match.score_a > match.score_b) {
                         const isCappotto = match.score_a === 6;
                         const points_A = isCappotto ? 4 : 3;
-                        const points_B = isCappotto ? -1 : 0;
+                        const points_B = isCappotto ? -1 : 1; // Corretto
                         
                         teamA_ids.forEach(id => { if (stats[id]) { stats[id].points += points_A; stats[id].wins += 1; } });
                         teamB_ids.forEach(id => { if (stats[id]) { stats[id].points += points_B; stats[id].losses += 1; } });
@@ -53,7 +47,7 @@ const MonthlyStats = () => {
                     } else if (match.score_b > match.score_a) {
                         const isCappotto = match.score_b === 6;
                         const points_B = isCappotto ? 4 : 3;
-                        const points_A = isCappotto ? -1 : 0;
+                        const points_A = isCappotto ? -1 : 1; // Corretto
 
                         teamB_ids.forEach(id => { if (stats[id]) { stats[id].points += points_B; stats[id].wins += 1; } });
                         teamA_ids.forEach(id => { if (stats[id]) { stats[id].points += points_A; stats[id].losses += 1; } });
@@ -63,17 +57,14 @@ const MonthlyStats = () => {
                 const finalLeaderboard = Object.values(stats)
                                               .filter(p => p.matches_played > 0)
                                               .sort((a, b) => b.points - a.points);
-                
                 setMonthlyLeaderboard(finalLeaderboard);
 
             } catch (error) {
                 setError(error.message);
-                console.error(error);
             } finally {
                 setLoading(false);
             }
         };
-
         calculateMonthlyStats();
     }, []);
 
@@ -81,9 +72,8 @@ const MonthlyStats = () => {
         if (player.matches_played === 0) return (0).toFixed(2);
         return (player.wins / player.matches_played).toFixed(2);
     };
-    
-    // JSX rimane invariato
-    if (loading) return <p>Caricamento statistiche mensili...</p>;
+
+    if (loading) return <p>Caricamento...</p>;
     if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
     return (
