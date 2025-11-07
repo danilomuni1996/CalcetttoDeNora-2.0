@@ -1,0 +1,54 @@
+/*
+ * Stili per il layout principale dell'applicazione
+ */
+
+/* Contenitore principale dell'App */
+.App {
+  max-width: 1200px; /* Limita la larghezza massima per una migliore leggibilità */
+  margin: 0 auto; /* Centra il contenitore nella pagina */
+  padding: 2rem;  /* Aggiunge spazio interno */
+  text-align: center; /* Centra il testo di default */
+}
+
+/* Stili per la barra di navigazione */
+nav {
+  display: flex;
+  justify-content: center; /* Centra i pulsanti */
+  gap: 12px; /* Spazio tra i pulsanti */
+  margin-bottom: 2rem; /* Spazio sotto la navigazione */
+  flex-wrap: wrap; /* Permette ai pulsanti di andare a capo su schermi piccoli */
+}
+
+/* Stili per i pulsanti di navigazione */
+nav button {
+  padding: 10px 20px;
+  font-size: 1em;
+  font-weight: 500;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  border-radius: 8px; /* Angoli arrotondati */
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+/* Effetto al passaggio del mouse sui pulsanti di navigazione */
+nav button:hover {
+  background-color: #e9e9e9;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Leggera ombra per effetto "sollevato" */
+}
+
+/* Stili per il contenitore principale del contenuto */
+main {
+    background-color: #ffffff;
+    padding: 20px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    text-align: left; /* Allinea a sinistra il testo dentro le pagine */
+}
+
+/* Stili specifici per i titoli delle sezioni (es. "Classifica") */
+main h2 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+}

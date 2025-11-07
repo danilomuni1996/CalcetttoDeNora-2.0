@@ -1,0 +1,264 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+/* === AGGIUNGI QUESTO IN FONDO A index.css === */
+
+/* Stile di base per tutte le tabelle */
+table {
+  width: 100%;
+  border-collapse: collapse; /* Unisce i bordi delle celle */
+  margin-top: 20px;
+  font-size: 0.9em;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden; /* Necessario per il border-radius */
+}
+
+/* Stile per l'intestazione della tabella */
+thead tr {
+  background-color: #007bff;
+  color: #ffffff;
+  text-align: left;
+  font-weight: bold;
+}
+
+/* Stile per le celle (sia intestazione che corpo) */
+th, td {
+  padding: 12px 15px; /* Aumenta lo spazio interno */
+  border-bottom: 1px solid #dddddd; /* Linea di separazione orizzontale */
+  text-align: left;
+}
+
+/* Stile per le righe del corpo della tabella */
+tbody tr {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* Effetto "Zebra": righe a colori alternati per migliorare la leggibilità */
+tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+/* Effetto al passaggio del mouse sulla riga */
+tbody tr:hover {
+  background-color: #e2e2e2;
+  cursor: pointer;
+}
+
+/* Stile per l'ultima riga: rimuove il bordo inferiore */
+tbody tr:last-of-type {
+  border-bottom: 2px solid #007bff;
+}
+
+/* Stile per i pulsanti di azione nelle tabelle */
+.delete-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+/* === AGGIUNGI QUESTO IN FONDO A index.css === */
+
+/* Stili per i contenitori dei form */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Stili per i raggruppamenti di campi (fieldset) */
+fieldset {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+}
+
+legend {
+  font-weight: bold;
+  color: #007bff;
+  padding: 0 10px;
+}
+
+/* Flexbox per allineare label e input */
+.form-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.form-field label {
+  flex-basis: 100px; /* Larghezza fissa per le etichette */
+  text-align: right;
+  font-weight: 500;
+}
+
+/* Stili per gli input e i select */
+input[type="text"],
+input[type="number"],
+input[type="file"],
+select {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+/* Stile per il pulsante di submit del form */
+button[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1em;
+  font-weight: bold;
+  color: white;
+  background-color: #28a745; /* Verde */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button[type="submit"]:hover {
+  background-color: #218838;
+}
+
+/* Stili per i messaggi di errore e successo */
+.form-error {
+  color: #dc3545; /* Rosso */
+  margin-top: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.form-success {
+  color: #28a745; /* Verde */
+  margin-top: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+/* === AGGIUNGI QUESTO IN FONDO A index.css === */
+
+/* Layout per affiancare i team */
+.teams-container {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.team-column {
+  flex: 1; /* Occupa metà dello spazio disponibile */
+}
+
+/* Stili per i pulsanti "Cappotto" */
+.cappotto-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.cappotto-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.cappotto-a {
+  border-color: #007bff;
+  color: #007bff;
+  background-color: white;
+}
+.cappotto-a:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.cappotto-b {
+  border-color: #dc3545;
+  color: #dc3545;
+  background-color: white;
+}
+.cappotto-b:hover {
+  background-color: #dc3545;
+  color: white;
+}
