@@ -18,6 +18,7 @@ const Leaderboard = () => {
 
                 const players = await playersRes.json();
                 const matches = await matchesRes.json();
+                
                 const stats = {};
                 players.forEach(p => {
                     stats[p.id] = { ...p, points: 0, wins: 0, losses: 0, matches_played: 0 };
@@ -31,11 +32,10 @@ const Leaderboard = () => {
                         if (stats[id]) stats[id].matches_played += 1;
                     });
 
-                    // --- NUOVA LOGICA PUNTEGGIO ---
                     if (match.score_a > match.score_b) { // Team A vince
                         const isCappotto = match.score_a === 6;
                         const points_A = isCappotto ? 4 : 3;
-                        const points_B = isCappotto ? -1 : 0;
+                        const points_B = isCappotto ? -1 : 1; // Corretto
                         
                         teamA_ids.forEach(id => { if (stats[id]) { stats[id].points += points_A; stats[id].wins += 1; } });
                         teamB_ids.forEach(id => { if (stats[id]) { stats[id].points += points_B; stats[id].losses += 1; } });
@@ -43,7 +43,7 @@ const Leaderboard = () => {
                     } else if (match.score_b > match.score_a) { // Team B vince
                         const isCappotto = match.score_b === 6;
                         const points_B = isCappotto ? 4 : 3;
-                        const points_A = isCappotto ? -1 : 0;
+                        const points_A = isCappotto ? -1 : 1; // Corretto
 
                         teamB_ids.forEach(id => { if (stats[id]) { stats[id].points += points_B; stats[id].wins += 1; } });
                         teamA_ids.forEach(id => { if (stats[id]) { stats[id].points += points_A; stats[id].losses += 1; } });
@@ -71,7 +71,6 @@ const Leaderboard = () => {
     if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
     return (
-        // ... JSX della tabella (invariato) ...
         <div className="leaderboard">
             <h2>Classifica Generale</h2>
             <table>
